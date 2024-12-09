@@ -28,39 +28,15 @@ app:
     MYSQL_HOST: my-github-value-mysql
     MYSQL_PORT: 33060
     MYSQL_USER: root
-    MYSQL_PASSWORD: octocat
+    MYSQL_PASSWORD: <password>
     MYSQL_DATABASE: value
     BASE_URL: http://localhost:32000
     GITHUB_APP_ID: 1053289
     GITHUB_APP_PRIVATE_KEY: |
       -----BEGIN RSA PRIVATE KEY-----
-      MIIEpAIBAAKCAQEAvrjhS/UUlP3ChndWKYScHX3FoHRRDNbCacxth/WNrYX5DDyZ
-      ZHcQj1GrBCWJqq3BUw4J9/F8YHPj5PVQsXDgmiwC+WCEIpVIXqCUzVdmkuYgzAiK
-      je9aQ/ujCFYYvfsjERz7nwT2yDK3QOMmtp0hTAGFxHxZQHzPVKxO2tsS5WKlV2lm
-      rrcDcEEEFQof/vzfbBtxxJjApuHUGH35wIs5zi/eo+HB/3kEcneSqSQZ7puaVEOn
-      gmxjg9m7qsicSbjZgrB3zHP98Cyw/iSzVNpN1UffjepKshwOyQnS84Y4r0wxV5o/
-      H87hMr4lZof3OMibE6yVR/xvTh9KbviCR07VIQIDAQABAoIBAQCr57pym2m8zWlL
-      iD7qVzPbxSSfdpgjaWN8tx02wda8xBfxtqFQE52igKsTpr4KUGkDcpD7ofdIfMy5
-      73+XIDXh4K+hlSQkg8fiOv1EhHXZDIIdRcmVG1uSETsm5WuRuc4mu6f08iV513Sj
-      kNqxGLoNZwXqT2anIJhEKrc8vt+uToZiNgD36HhYuKgCUGent/d6EJMNQ0DKvhuS
-      vnRpYlZZJicZC9G/iG0oOPR8kXIsdkyhKUetP0bBgfEZGRctxoRpes03llhHNx3Y
-      B/p/Bzt7Kkdg4swtuFsfLTPLw4DtwadtgmEC53ZFS5vLnRVSi/D+7AKeNUuBPf2a
-      WF55ej1RAoGBAPUAdwAmlvwhr4WrA2wW0bJQv08IkST5POedUNNhF2XqcWy5GDed
-      0F9TBFJJndkQ7NYcJM0faXIx1BVcvugOyOKEy0v0djmtl16GYaQj0PS7JSHqTbUs
-      ccxYZ8YN2U8UkbAMIXw86OE40qo6n9RdzUnlMaJRKscgIeZETuPHFoqlAoGBAMdI
-      o7G1wf5L0hpQG8PXdZPVmVmCevSYH4iJVJCZOhyakyL2tJriCGsVDHXHvSREj1ik
-      +ftpgPFO7vN4w4I/3KGNMvANqZ02+cqn0v8kwXu6KCNnZ/wfMNmGm68nUVZFwzKi
-      3yTvxIZutO1h9l9zpW2bepUr+jNaGMSzKu9q1GPNAoGAfBOeMJ9ae5n7sDApbYYo
-      8KtgF4B5MUZgB9Rt6H8VQHH4u10J3LC5pG0AlUPfAt1FdDGQmak8165Qf/kWXaOP
-      LNiftHm7nf5B2Icpz9yrqCVW6tQkQoqdnyVueKju0tPR7FxYYPjf35/NYJSL+RsA
-      Klo+RrvgdDPbtygE4+ohilkCgYB6gD6P2SjdBwKqRiArLOEL9TuE+F5YyMJpjfG7
-      yVUdjC9ySLEQnG2MVa4JILU1/CcZ2KAKWfp3W4wrgkq8YEFh1YhAZEWlbMv0NWHQ
-      kWmWgwJ1cPVM2GeQ79v3uXWYUN4C3HfLHtBxys/RNGzclBxW2kJqPFRbCME8+N4l
-      ukfA6QKBgQCPEsy6JE7y4lWycvvQs3D7YicuyCVzd0MmT/XgQpQBvGArBWRpVOLx
-      jWHnY+A+MffoZliUAeHAv0O+oV+GP0FQoOD/n3m4E8jAhEICu5L3DF++8PDYLboa
-      klaqJcFGcUz9ugf+MP72btX3IeSCDaDCM2Fuq+tGj9t8fAI/gpebSA==
+    
       -----END RSA PRIVATE KEY-----
-    GITHUB_WEBHOOK_SECRET: abc123
+    GITHUB_WEBHOOK_SECRET: <secret>
     GITHUB_APP_INSTALLATION_ID: 1053289
 
 # Database container settings
