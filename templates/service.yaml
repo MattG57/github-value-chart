@@ -5,7 +5,13 @@ metadata:
   labels:
     {{- include "github-value-helm.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  {{- if eq .Values.kubernetesEnvironment "gke" }}
+  type: LoadBalancer
+  {{- else if eq .Values.kubernetesEnvironment "dockerdesktop" }}
+  type: NodePort
+  {{- else }}
+  type: ClusterIP
+  {{- end }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.targetPort }}

@@ -1,5 +1,5 @@
 # Use Node.js 18 as the base image
-FROM node:22
+FROM node:18-bullseye
 
 # Set the working directory in the container
 WORKDIR /app
@@ -17,16 +17,13 @@ RUN apt-get update && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get i
 
 # Install backend dependencies
 WORKDIR /app/backend
-RUN npm install
+RUN npm install && npm run build
 
 # Install frontend dependencies
 WORKDIR /app/frontend
-RUN npm install
+RUN npm install && npm run build
 
-# Copy the entrypoint script into the container
-WORKDIR /app
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
 
-# Set the entrypoint script as the default entrypoint
-ENTRYPOINT ["/app/entrypoint.sh"]
+WORKDIR /app/backend
+
+CMD node dist/index.js | ./node_modules/.bin/bunyan

@@ -8,5 +8,4 @@ env | grep -E '^MY_|^GIT_|^BASE_' > /app/backend/.env
 
 # Start the frontend and backend applications
 echo "Starting frontend and backend..."
-cd /app/backend && npm start &
-cd /app/frontend && npm run start -- --host 0.0.0.0
+cd /app/backend && npm run start

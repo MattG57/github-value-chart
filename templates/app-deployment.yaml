@@ -34,6 +34,10 @@ spec:
       serviceAccountName: {{ include "github-value-helm.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+      - name: wait-for-mysql
+        image: busybox
+        command: ["sh", "-c", "until nc -zv github-value-chart-mysql 3306; do echo waiting for mysql; sleep 5; done"]  
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -42,7 +46,7 @@ spec:
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.targetPort }}
+              containerPort: {{ .Values.service.targetPort }} #fix this
               protocol: TCP
           livenessProbe:
             {{- toYaml .Values.app.image.livenessProbe | nindent 12 }}

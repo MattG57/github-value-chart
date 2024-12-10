@@ -10,4 +10,10 @@ spec:
   resources:
     requests:
       storage: {{ .Values.db.persistentVolumeClaim.resources.requests.storage }}
-  storageClassName: {{ .Values.db.persistentVolumeClaim.storageClassName | quote }}
+  {{- if eq .Values.kubernetesEnvironment "gke" }}
+  storageClassName: standard-rwo
+  {{- else if eq .Values.kubernetesEnvironment "dockerdesktop" }}
+  storageClassName: hostpath
+  {{- else }}
+  storageClassName: ""
+  {{- end }}

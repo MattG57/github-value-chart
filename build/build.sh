@@ -10,27 +10,28 @@ read -r DOCKER_USERNAME
 echo "Enter your Docker Hub password:"
 read -s DOCKER_PASSWORD  # Use -s to hide the password input
 
-DOCKER_IMAGE="github-value"            # Docker image name
+DOCKER_IMAGE="github-value-amd2"            # Docker image name
 DOCKER_TAG="latest"                    # Docker image tag
-REGISTRY="mgunter"        # Container registry (e.g., Docker Hub, AWS ECR)
+REGISTRY="mgunter"                     # Container registry (Docker Hub username or org)
 
+# Ensure Buildx is set up
+docker buildx create --use --name multiarch-builder || true
+docker buildx inspect multiarch-builder --bootstrap
 
-# Build the Docker image
-echo "Building Docker image..."
-docker build -t $DOCKER_IMAGE:$DOCKER_TAG .
+# Log in to Docker Hub
+echo "Logging into Docker Hub..."
+echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-# Tag the Docker image for the registry
-echo "Tagging Docker image..."
-docker tag $DOCKER_IMAGE:$DOCKER_TAG $REGISTRY/$DOCKER_IMAGE:$DOCKER_TAG
+# Build and push the multi-architecture image
+echo "Building and pushing multi-architecture Docker image..."
+docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  -t "$REGISTRY/$DOCKER_IMAGE:$DOCKER_TAG" \
+  --push .
 
-# Log in to the container registry
-echo "Logging into the container registry..."
-# Replace USERNAME and PASSWORD with your credentials or use a secure method to manage them.
-# echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin $REGISTRY
-docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-# Push the image to the container registry
-echo "Pushing Docker image to the registry..."
-docker push $REGISTRY/$DOCKER_IMAGE:$DOCKER_TAG
+# Verify the image manifest
+echo "Verifying Docker image manifest..."
+docker manifest inspect "$REGISTRY/$DOCKER_IMAGE:$DOCKER_TAG"
 
 # Output success message
 echo "Docker image successfully built and pushed to $REGISTRY/$DOCKER_IMAGE:$DOCKER_TAG"

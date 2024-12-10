@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "github-value-helm.fullname" . }}-mysql
+  name: github-value-chart-mysql
   labels:
     {{- include "github-value-helm.labels" . | nindent 4 }}
     component: mysql

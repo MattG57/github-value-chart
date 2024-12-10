@@ -4,6 +4,7 @@ metadata:
   name: github-value-config
   namespace: {{ .Values.namespace }}
 data:
+  PORT: {{ .Values.app.config.PORT | quote }}
   MYSQL_HOST: {{ .Values.app.config.MYSQL_HOST | quote }}
   MYSQL_PORT: {{ .Values.app.config.MYSQL_PORT | quote }}
   MYSQL_USER: {{ .Values.app.config.MYSQL_USER | quote }}
