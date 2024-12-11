@@ -11,5 +11,4 @@ data:
   MYSQL_DATABASE: {{ .Values.app.config.MYSQL_DATABASE | quote }}
   MYSQL_PASSWORD: {{ .Values.app.config.MYSQL_PASSWORD | quote }}
   BASE_URL: {{ .Values.app.config.BASE_URL | quote }}
-  GITHUB_APP_ID: {{ .Values.app.config.GITHUB_APP_ID | quote }}
-  GITHUB_APP_INSTALLATION_ID: {{ .Values.app.config.GITHUB_APP_INSTALLATION_ID | quote }}
+  GITHUB_APP_ID: {{  .Values.app.config.GITHUB_APP_ID | quote }}

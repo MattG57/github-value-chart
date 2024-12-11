@@ -18,6 +18,7 @@ spec:
         {{- include "github-value-helm.labels" . | nindent 8 }}
         component: mysql
     spec:
+      terminationGracePeriodSeconds: 60 
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -44,6 +45,6 @@ spec:
           volumeMounts:
             {{- toYaml .Values.db.volumeMounts | nindent 12 }}
       volumes:
-        {{- toYaml .Values.volumes | nindent 8 }}
+        {{- toYaml .Values.db.volumes | nindent 8 }}
 # MySQL-only deployment YAML 
 {{- end }}

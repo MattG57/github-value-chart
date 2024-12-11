@@ -6,6 +6,7 @@ metadata:
   labels:
     {{- include "github-value-helm.labels" . | nindent 4 }}
 spec:
+  terminationGracePeriodSeconds: 60 
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}

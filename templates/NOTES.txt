@@ -1,3 +1,4 @@
+
 1. Get the application URL by running these commands:
 {{- if .Values.ingress.enabled }}
 {{- range $host := .Values.ingress.hosts }}
@@ -19,4 +20,18 @@
   export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
   echo "Visit http://127.0.0.1:8080 to use your application"
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:$CONTAINER_PORT
+{{- end }}
+{{- if eq .Values.kubernetesEnvironment "gke" }}
+The {{  .Values.db.persistentVolumeClaim.name}} was created for MySQL data storage:
+
+To ensure the PersistentVolume (PV) backing this PVC is retained after deleting the Helm release, patch its `reclaimPolicy`:
+
+1. Get the name of the PV bound to this PVC:
+   kubectl get pv -n {{ .Release.Namespace }} -o wide
+
+2. Patch the PV to set the `reclaimPolicy` to `Retain`:
+   kubectl patch pv $(kubectl get pvc {{ .Release.Name }}-db-pvc -n {{ .Release.Namespace }} -o jsonpath='{.spec.volumeName}') \
+     -p '{"spec":{"persistentVolumeReclaimPolicy":"Retain"}}'
+
+This ensures the PersistentVolume is not deleted if the PVC is removed.
 {{- end }}

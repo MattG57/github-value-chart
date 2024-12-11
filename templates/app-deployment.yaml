@@ -62,7 +62,7 @@ spec:
             - secretRef:
                 name: github-value-secret
       volumes:
-        {{- toYaml .Values.volumes | nindent 8 }}
+        {{- toYaml .Values.app.volumes | nindent 8 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

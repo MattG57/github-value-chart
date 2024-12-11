@@ -4,6 +4,11 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.db.persistentVolumeClaim.name }}
   namespace: {{ .Values.namespace }}
+  {{- if eq .Values.kubernetesEnvironment "gke" }}
+  annotations:
+    helm.sh/resource-policy: keep  # Prevent Helm from deleting this PVC
+  {{- end }}
+    
 spec:
   accessModes:
     {{- toYaml .Values.db.persistentVolumeClaim.accessModes | nindent 2 }}

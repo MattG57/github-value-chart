@@ -20,6 +20,12 @@ app:
     tag: "latest"  # Docker image tag
     pullPolicy: IfNotPresent  # Image pull policy (e.g., Always, IfNotPresent)
   name: github-value  # Name of the primary container within the Pod  
+  volumes:
+  - name: config-volume
+    configMap:
+      name: github-value-config
+  - name: working-volume
+    emptyDir: {}
   volumeMounts:
     - name: config-volume
       mountPath: /etc/config
@@ -31,14 +37,23 @@ app:
     MYSQL_HOST: github-value-chart-mysql
     MYSQL_PORT: 3306
     MYSQL_USER: root
-    MYSQL_PASSWORD: <password
-    MYSQL_DATABASE: value
+    MYSQL_PASSWORD: <redacted>
+    MYSQL_DATABASE: c7km0hpn62ch57zy
     BASE_URL: http://localhost:80
-    GITHUB_APP_ID: 1053289
+    GITHUB_APP_ID: "1053289"
     GITHUB_APP_PRIVATE_KEY: |
-     <private key>
-    GITHUB_WEBHOOK_SECRET: abc123
+      -----BEGIN RSA PRIVATE KEY-----
+      <redacted>
+      -----END RSA PRIVATE KEY-----
+    GITHUB_WEBHOOK_SECRET: <redacted
     GITHUB_APP_INSTALLATION_ID: 1053289
+  resources:
+    requests:
+      cpu: "2"   # 2 vCPU
+      memory: "16Gi" # 16 Gi
+    limits:
+      cpu: "4"      # 4 vCPU
+      memory: "32Gi"  # 32 GB
 
 # Database container settings
 db:
@@ -48,8 +63,8 @@ db:
     pullPolicy: IfNotPresent  # Image pull policy for the database image
   name: github_valuedb  # Name of the MySQL database to initialize  
   credentials:
-    database: value  # Name of the database to be initialized
-    rootPassword: <password>  # Root password for MySQL (consider a Secret in production)
+    database: c7km0hpn62ch57zy  # Name of the database to be initialized
+    rootPassword: <redacted>  # Root password for MySQL (consider a Secret in production)
   configMapName: db-config  # Name of the ConfigMap for MySQL database
   configMapKey: MYSQL_DATABASE  # Key in the ConfigMap for MySQL database
   secretName: db-secret  # Name of the Secret for MySQL root password
@@ -77,11 +92,25 @@ db:
     periodSeconds: 5
     failureThreshold: 3
     successThreshold: 1
+  volumes:
+  - name: db-config-volume
+    configMap:
+      name: db-config
+  - name: db-working-volume
+    persistentVolumeClaim:
+      claimName: db-pvc  
   volumeMounts:
     - name: db-config-volume
       mountPath: /etc/db-config
     - name: db-working-volume
       mountPath: /var/lib/mysql
+  resources:
+    requests:
+      cpu: "2"   # 2 vCPU
+      memory: "16Gi" # 16 Gi
+    limits:
+      cpu: "4"      # 4 vCPU
+      memory: "32Gi"  # 32 GB
   persistentVolumeClaim:
     name: db-pvc
     accessModes:
