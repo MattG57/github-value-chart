@@ -7,7 +7,7 @@ metadata:
 spec:
   {{- if eq .Values.kubernetesEnvironment "gke" }}
   type: LoadBalancer
-  {{- else if eq .Values.kubernetesEnvironment "dockerdesktop" }}
+  {{- else if eq .Values.kubernetesEnvironment "dockerdesktop" or eq .Values.kubernetesEnvironment "aks" or eq .Values.kubernetesEnvironment "openshift" }}
   type: NodePort
   {{- else }}
   type: ClusterIP

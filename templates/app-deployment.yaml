@@ -36,8 +36,8 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
       - name: wait-for-mysql
-        image: busybox
-        command: ["sh", "-c", "until nc -zv github-value-chart-mysql 3306; do echo waiting for mysql; sleep 5; done"]  
+        image: {{ .Values.poller.image }}
+        command:  {{ .Values.poller.command }}  
       containers:
         - name: {{ .Chart.Name }}
           securityContext:

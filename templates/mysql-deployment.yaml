@@ -23,7 +23,7 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: mysql
-          image: mysql:{{ .Values.db.image.tag | default "latest" }}
+          image: {{ .Values.db.image}}:{{ .Values.db.image.tag | default "latest" }}
           ports:
             - name: sql
               protocol: TCP
