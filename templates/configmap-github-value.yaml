@@ -5,10 +5,6 @@ metadata:
   namespace: {{ .Values.namespace }}
 data:
   PORT: {{ .Values.app.config.PORT | quote }}
-  MYSQL_HOST: {{ .Values.app.config.MYSQL_HOST | quote }}
-  MYSQL_PORT: {{ .Values.app.config.MYSQL_PORT | quote }}
-  MYSQL_USER: {{ .Values.app.config.MYSQL_USER | quote }}
-  MYSQL_DATABASE: {{ .Values.app.config.MYSQL_DATABASE | quote }}
-  MYSQL_PASSWORD: {{ .Values.app.config.MYSQL_PASSWORD | quote }}
   BASE_URL: {{ .Values.app.config.BASE_URL | quote }}
   GITHUB_APP_ID: {{  .Values.app.config.GITHUB_APP_ID | quote }}
+  MONGODB_URI: {{ .Values.app.config.MONGODB_URI | quote }}
