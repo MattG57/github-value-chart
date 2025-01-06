@@ -35,7 +35,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
-      - name: wait-for-mysql
+      - name: wait-for-mongodb
         image: {{ .Values.poller.image }}
         command:  {{ .Values.poller.command }}  
       containers:

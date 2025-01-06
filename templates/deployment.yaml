@@ -55,16 +55,16 @@ spec:
                 name: github-value-config
             - secretRef:
                 name: github-value-secret
-        - name: mysql
-          image: mysql:{{ .Values.db.image.tag | default "latest" }}
+        - name: mongo
+          image: mongo:{{ .Values.db.image.tag | default "latest" }}
           ports:
-            - name: sql
+            - name: mongo
               protocol: TCP
               containerPort: {{ .Values.db.containerPort }}
           env:
-            - name: MYSQL_DATABASE
-              value: {{ .Values.db.credentials.database }}
-            - name: MYSQL_ROOT_PASSWORD
+            - name: MONGODB_URI
+              value: {{ .Values.app.config.MONGODB_URI }}
+            - name: MONGODB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.db.secretName }}

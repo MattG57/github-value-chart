@@ -87,25 +87,24 @@ poller:
 # Database container settings
 db:
   image:
-    repository: mysql  # Docker repository for the database image
+    repository: mongo  # Docker repository for the database image
     tag: latest  # Docker image tag for the database
     pullPolicy: IfNotPresent  # Image pull policy for the database image
   name: github_valuedb  # Name of the MySQL database to initialize  
   credentials:
-    database: c7km0hpn62ch57zy  # Name of the database to be initialized
-    rootPassword: octocat  # Root password for MySQL (consider a Secret in production)
-  configMapName: db-config  # Name of the ConfigMap for MySQL database
-  configMapKey: MYSQL_DATABASE  # Key in the ConfigMap for MySQL database
-  secretName: db-secret  # Name of the Secret for MySQL root password
-  secretKey: MYSQL_ROOT_PASSWORD  # Key in the Secret for MySQL root password
-  containerPort: 3306  # Add this line
+    database: github-value  # Name of the database to be initialized
+    rootPassword: octocat  # Root password for MongoDB (use a Secret in production)
+  configMapName: db-config  # Name of the ConfigMap for MongoDB database
+  configMapKey: MONGODB_DATABASE  # Key in the ConfigMap for MySQL database
+  secretName: db-secret  # Name of the Secret for mongodb root password
+  secretKey: MongoDB_ROOT_PASSWORD  # Key in the Secret for mongodb root password
+  containerPort: 27017  # Add this line
   livenessProbe:
     exec:
        command:
-        - mysqladmin
-        - ping
-        - "-h"
-        - "localhost"
+        - mongo
+        - --eval
+        - "db.adminCommand('ping')"
     initialDelaySeconds: 15
     periodSeconds: 10
     failureThreshold: 5
@@ -113,10 +112,9 @@ db:
   readinessProbe:
     exec:
       command:
-        - mysqladmin
-        - ping
-        - "-h"
-        - "localhost"
+        - mongo
+        - --eval
+        - "db.adminCommand('ping')"
     initialDelaySeconds: 10
     periodSeconds: 5
     failureThreshold: 3
@@ -159,10 +157,10 @@ service:
 
 # DB Service ports
 dbService:
-  type: ""  # Kubernetes service type --see logic in templates/mysql-service.yaml
+  type: ""  # Kubernetes service type --see logic in templates/mongodb-service.yaml
   protocol: TCP  # Protocol used by the service (TCP is default)
-  port: 3306  # Port exposed by the service for the application
-  targetPort: 3306  # Port on the container that the service routes to
+  port: 27017  # Port exposed by the service for the application
+  targetPort: 27017  # Port on the container that the service routes to
   nodePort: 3100  # Specific NodePort for external access
 
 serviceAccount:
@@ -202,4 +200,4 @@ volumes:
       name: db-config
   - name: db-working-volume
     persistentVolumeClaim:
-      claimName: db-pvc
+      claimName: mongodb-pvc
