@@ -1,10 +1,10 @@
-name: github-value
+name: github-value-chart  # Name of the Helm chart
 version: 0.1.0
 appVersion: 0.1
 deployment:
   mode: split-pods # can be "single-pod" or "split-pods"
 
-kubernetesEnvironment: gke  # Possible values: gke, dockerdesktop, openshift, aks 
+kubernetesEnvironment: dockerdesktop  # Possible values: gke, dockerdesktop, openshift, aks 
 # sets default networking and storageClassName for the environment (#managed-csi #standard-rwo #thin-csi #hostpath)
 
 # General settings
@@ -82,7 +82,7 @@ app:
 
 # Sidecar container settings
 poller:
-  image: busybox # or another image that has `nc` installed (e.g. alpine) 
+  image: busybox # or another image that has `nc` installed (e.g. alpine)
   command: ["sh", "-c", "until nc -zv github-value-chart-mysql 3306; do echo waiting for mysql; sleep 5; done"]
 # Database container settings
 db:
